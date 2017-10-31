@@ -30,9 +30,9 @@ namespace Contacts
 
             modelBuilder.Entity<Person>().Property(p => p.LastName).IsRequired().HasMaxLength(50).IsUnicode(false).HasColumnName("LNAME");
 
-            modelBuilder.Entity<Person>().Property(p => p.BirthDate).ForSqlServerHasColumnType("date").ForSqlServerHasDefaultValueSql("getdate()");
+            //modelBuilder.Entity<Person>().Property(p => p.BirthDate).ForSqlServerHasColumnType("date").ForSqlServerHasDefaultValueSql("getdate()");
 
-            modelBuilder.Entity<Person>().Property(p => p.IsActive).ForSqlServerHasDefaultValue(true);
+            //modelBuilder.Entity<Person>().Property(p => p.IsActive).ForSqlServerHasDefaultValue(true);
 
             modelBuilder.Model.GetEntityTypes().ToList().ForEach(a =>
             {
@@ -62,12 +62,12 @@ namespace Contacts
                 .HasKey(e => new { e.PersonId, e.CompanyId });
 
             modelBuilder.Entity<CompanyPerson>()
-                .HasOne(e => e.Company).WithMany(e => e.CompanyPersons).HasForeignKey(e => e.CompanyId)
-                .ForSqlServerHasConstraintName("FK_COMPANYPERSON_COMPANY").OnDelete(DeleteBehavior.Restrict);
+                .HasOne(e => e.Company).WithMany(e => e.CompanyPersons).HasForeignKey(e => e.CompanyId);
+            //.ForSqlServerHasConstraintName("FK_COMPANYPERSON_COMPANY").OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<CompanyPerson>()
-                .HasOne(e => e.Person).WithMany(e => e.CompanyPersons).HasForeignKey(e => e.PersonId)
-                .ForSqlServerHasConstraintName("FK_COMPANYPERSON_PERSON").OnDelete(DeleteBehavior.Restrict);
+                .HasOne(e => e.Person).WithMany(e => e.CompanyPersons).HasForeignKey(e => e.PersonId);
+                //.ForSqlServerHasConstraintName("FK_COMPANYPERSON_PERSON").OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<PersonResume>()
                 .HasKey(e => e.PersonId);
@@ -75,8 +75,8 @@ namespace Contacts
             modelBuilder.Entity<Person>()
                 .HasOne(e => e.PersonResume)
                 .WithOne(e => e.Person)
-                .HasForeignKey<PersonResume>(e => e.PersonId)
-                .ForSqlServerHasConstraintName("FK_RESUME_PERSON");
+                .HasForeignKey<PersonResume>(e => e.PersonId);
+                //.ForSqlServerHasConstraintName("FK_RESUME_PERSON");
 
         }
     }
